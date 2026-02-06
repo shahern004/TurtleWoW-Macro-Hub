@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_github_github__get_file_contents",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:gitea.com)",
+      "WebFetch(domain:codeberg.org)",
+      "mcp__plugin_github_github__list_commits",
+      "mcp__plugin_github_github__search_code",
+      "mcp__plugin_github_github__list_branches",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(echo:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
