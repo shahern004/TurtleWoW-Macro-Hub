@@ -5,15 +5,15 @@
 - Do not guess API signatures, function behaviors, addon capabilities, or server-specific features
 - If documentation is unclear or missing, ask the user first
 - Verify against Turtle WoW docs — vanilla 1.12 API behavior often differs here
-- When writing macros, read the relevant `docs/` file before using any custom API function
 
-## Testing & Commit Policy
-**EVERY macro, snippet, and code change MUST be tested in-game before committing.**
-- Do NOT commit or push until the user has explicitly confirmed the test passed
-- After writing/modifying a macro, present it to the user and wait for their in-game verification
-- Never assume something works — the user will test and report back
-- If a test fails, fix the issue and wait for re-verification before proceeding
-- This applies to all code: macros, snippets, helpers, detection patterns — everything
+## Macro Creation Workflow
+
+1. **Clarify** — understand class, spec, desired behavior, modifier keys, fallback logic. Ask if anything is ambiguous
+2. **Check existing work** — search `macros/` and `patterns.md` for similar implementations to build on
+3. **Read docs** — use the **Task Routing** table to pick which `docs/` files to read. Always read before using any custom API function
+4. **Write** — use `/cast` conditional syntax unless `/run` Lua scripting is specifically required. Include `@header` metadata (see **Macro File Format**)
+5. **Present & test** — show the complete macro and **wait for the user's in-game verification**. Do NOT commit or push until the user explicitly confirms it passed
+6. **Iterate or commit** — if the test fails, fix and re-present. If it passes, commit only when the user asks
 
 ## Project Structure
 ```
@@ -34,6 +34,20 @@ macros/general/           # Class-agnostic (targeting/, consumables/, movement/,
 macros/pvp/ macros/raid/  # PvP and raid macros
 snippets/                 # Reusable Lua fragments (detection.lua, helpers.lua)
 ```
+
+## Which Docs to Read (Task Routing)
+
+| Task | Read These Docs |
+|------|----------------|
+| **Writing a `/cast` rotation macro** | `cleveroid-syntax.md` (slash commands) + `cleveroid-conditionals.md` (conditions) + `patterns.md` (examples) |
+| **Warrior macro specifically** | Above + `warrior-rotations.md` (priorities & mechanics) |
+| **Using distance, LoS, or behind checks** | `unitxp-api.md` (5 meter types, LoS caching, targeting) |
+| **Querying DBC data (spell/item/unit info)** | `nampower-api.md` (GetSpellRec, GetItemStats, GetUnitData -- mind reusable tables!) |
+| **Listening for combat events** | `nampower-events.md` (30+ events) + `nampower-cvars.md` (CVar gates) |
+| **Writing `/run` Lua snippets** | `vanilla-api-essentials.md` (base API) + `superwow-api.md` (enhanced functions) |
+| **Tracking debuffs across target swaps** | `cleveroid-conditionals.md#debuff-tracking` (built-in vs Cursive) |
+| **Checking immunity / CC** | `cleveroid-conditionals.md#cc--immunity` + `cleveroid-conditionals.md#immunity-tracking` |
+| **Spell queuing behavior** | `nampower-api.md#spell-casting-and-queuing` + `nampower-cvars.md#spell-queuing-controls` |
 
 ## Dependency Stack
 | Source | Doc File(s) | Purpose |
@@ -158,10 +172,21 @@ See `macros/_template.lua` for full template. Key fields: `@requires` lists mand
 /cast [meleerange:=1] Bloodthirst
 ```
 
+## Casting Function Disambiguation
+
+| Function | Source | When to Use |
+|----------|--------|-------------|
+| `/cast [cond] Spell` | CleveroidMacros | **Default for macros.** Conditional evaluation, priority chains, multiscan. Integrates with `/firstaction` |
+| `CastSpellByName("spell", "unit")` | SuperWoW | **In `/run` scripts.** Direct cast on specific unit token. No queuing, no conditionals |
+| `QueueSpellByName("spell")` | Nampower | **In `/run` scripts when queuing matters.** Forces spell into queue even outside normal queue window. Use for tight rotation scripting |
+| `CastSpellByNameNoQueue("spell")` | Nampower | **In `/run` scripts when queuing must NOT happen.** Immediate cast attempt, bypasses queue entirely |
+
+**Rule of thumb:** Use `/cast` for macros. Use `QueueSpellByName` in Lua scripts for rotation logic. Use `CastSpellByName` in Lua scripts for targeted heals/casts on specific units. Use `CastSpellByNameNoQueue` only when you explicitly need to bypass queuing.
+
 ## Gotchas
 - **255 char limit**: Vanilla macro limit. SuperMacro addon removes it — use book storage for long scripts. Call child macros with `{MacroName}` syntax in CleveroidMacros or `/runmacro Name`
 - **Spell name case**: Case-sensitive in CastSpellByName. Use exact names from spellbook
-- **cooldown vs cdgcd**: `[cooldown]` ignores GCD (for rotation logic). `[cdgcd]` includes GCD (for "is spell truly ready")
+- **cooldown vs cdgcd**: `[cooldown]` ignores GCD — use for rotation priority logic ("is the real CD ready?"). `[cdgcd]` includes GCD — use for "is the spell truly castable right now?" checks. In most rotation macros, `[cooldown]` is correct
 - **copy parameter**: Nampower table-returning functions reuse the same table. Store values immediately or pass `copy=1`
 - **CVar requirements**: Auto-attack events need `NP_EnableAutoAttackEvents=1`. Aura cap tracking needs `NP_EnableAuraCastEvents=1`. Set in `Config\config.wtf` or via `/run SetCVar(...)`
 - **Reactive abilities**: Must be on an action bar slot for `[reactive:Overpower]` to work

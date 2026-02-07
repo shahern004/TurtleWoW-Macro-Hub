@@ -8,6 +8,27 @@ For slash command syntax, see `cleveroid-syntax.md`.
 
 ---
 
+## Quick Index
+
+| Category | Key Conditionals | Section |
+|----------|-----------------|---------|
+| **Modifiers & State** | `mod`, `combat`, `stance`/`form`, `stealth`, `group`, `moving`, `zone` | [Modifiers & Player State](#modifiers--player-state) |
+| **Resources** | `myhp`, `mypower`, `myrawhp`, `combo`, `druidmana`, `stat` | [Resources](#resources) |
+| **Buffs & Debuffs** | `mybuff`, `mydebuff`, `buff`, `debuff`, `cursive`, `mybuffcount` | [Buffs & Debuffs](#buffs--debuffs) |
+| **Cooldowns & Casting** | `cooldown`, `cdgcd`, `gcd`, `usable`, `reactive`, `known`, `channeled`, `casttime`, `queuedspell` | [Cooldowns & Casting](#cooldowns--casting) |
+| **Target Checks** | `exists`, `alive`, `help`, `harm`, `hp`, `hplost`, `class`, `type`, `casting`, `targeting`, `pet`, `tag` | [Target Checks](#target-checks) |
+| **Range & Position** | `distance`, `inrange`, `outrange`, `meleerange`, `behind`, `insight` | [Range & Position](#range--position) |
+| **Equipment** | `equipped`, `mhimbue`, `ohimbue` | [Equipment](#equipment) |
+| **CC & Immunity** | `cc`, `mycc`, `immune`, `noimmune`, `resisted` | [CC & Immunity](#cc--immunity) |
+| **Addon Integrations** | `swingtimer`, `threat`, `ttk`/`tte`, `cursive`, `targeting:tank` | [Addon Integrations](#addon-integrations) |
+| **Slam (Warrior)** | `noslamclip`, `slamclip`, `nonextslamclip`, `nextslamclip` | [Warrior Slam Conditionals](#warrior-slam-conditionals) |
+| **Auto-Attack** | `lastswing`, `incominghit` (requires CVar) | [Auto-Attack Conditionals](#auto-attack-conditionals) |
+| **Aura Cap** | `mybuffcapped`, `debuffcapped`, `buffcapped` | [Aura Cap Conditionals](#aura-cap-conditionals) |
+| **Debuff Tracking** | `debuff` (built-in) vs `cursive` (GUID-based) | [Debuff Tracking](#debuff-tracking) |
+| **Immunity Tracking** | `noimmune` (auto-learn), split damage spells | [Immunity Tracking](#immunity-tracking) |
+
+---
+
 ## Modifiers & Player State
 
 | Conditional | Example | Description |
