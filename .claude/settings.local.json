@@ -12,7 +12,19 @@
       "Bash(ls:*)",
       "Bash(echo:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(dir:*)",
+      "WebFetch(domain:rentry.co)",
+      "Bash(wc:*)",
+      "mcp__plugin_github_github__create_repository",
+      "Bash(gh repo view:*)",
+      "Bash(python -c:*)",
+      "mcp__plugin_serena_serena__get_current_config",
+      "mcp__plugin_serena_serena__list_dir",
+      "mcp__plugin_serena_serena__activate_project"
     ]
-  }
+  },
+  "outputStyle": "Explanatory",
+  "spinnerTipsEnabled": true,
+  "prefersReducedMotion": true
 }
