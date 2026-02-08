@@ -12,6 +12,7 @@ function TR:RegisterWarriorEvents()
     TR.frame:RegisterEvent("SPELLCAST_FAILED")
     TR.frame:RegisterEvent("SPELLCAST_INTERRUPTED")
     TR.frame:RegisterEvent("PLAYER_TARGET_CHANGED")
+    TR.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
     TR:Debug("Warrior events registered")
 end
 
@@ -50,9 +51,22 @@ function TR:HandleWarriorEvent()
             TR:Debug("Slam cast ended")
         end
 
+    elseif event == "CHAT_MSG_COMBAT_SELF_HITS" then
+        -- Melee swing landed — HS/Cleave has been consumed
+        if TR.state.swingAttackQueued then
+            TR.state.swingAttackQueued = false
+            TR:Debug("Swing landed, HS/Cleave consumed")
+        end
+
     elseif event == "PLAYER_TARGET_CHANGED" then
-        -- Could cache target properties here (elite, boss, etc.)
-        -- For now, just debug output
-        TR:Debug("Target changed")
+        -- Reset auto-attack flag so we re-call AttackTarget on new target
+        TR.state.autoAttacking = false
+        TR:Debug("Target changed, auto-attack reset")
+
+    elseif event == "PLAYER_REGEN_ENABLED" then
+        -- Left combat — reset combat state flags
+        TR.state.autoAttacking = false
+        TR.state.swingAttackQueued = false
+        TR:Debug("Left combat, flags reset")
     end
 end

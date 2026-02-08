@@ -37,9 +37,6 @@ SlashCmdList["ARMSDPS"] = function()
 
     -- Always: ensure auto-attack is running
     TR:StartAttack()
-
-    -- Reset swing attack flag for next press
-    TR.state.swingAttackQueued = false
 end
 
 --- Arms Cleave rotation (2+ targets).
@@ -60,6 +57,4 @@ SlashCmdList["ARMSCLEAVE"] = function()
     TR:ReserveRage("Mortal Strike")
     TR:CleaveStrike()
     TR:StartAttack()
-
-    TR.state.swingAttackQueued = false
 end

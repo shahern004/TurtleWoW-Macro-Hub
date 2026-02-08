@@ -99,13 +99,16 @@ function TR:TargetHPPercent()
 end
 
 --- Count debuff stacks on target by name.
--- Uses SuperWoW enhanced UnitDebuff (returns auraId).
+-- LIMITATION: SuperWoW's UnitDebuff returns (name, rank, texture, auraId),
+-- where the 4th value is auraId NOT stack count. The vanilla API returns
+-- (name, rank, texture, count, debuffType), but SuperWoW replaces this.
+-- As a result, this function CANNOT reliably detect stack counts.
+-- TODO: Verify in-game whether the 4th return is auraId or count.
+-- Possible alternatives: GetUnitData("target") or combat log tracking.
 function TR:GetDebuffStacks(unit, debuffName)
     for i = 1, 40 do
         local name, rank, texture, stacks = UnitDebuff(unit, i)
         if not name then break end
-        -- Texture-based matching is more reliable than name in 1.12
-        -- but we use name for clarity. Caller can switch to auraId if needed.
         if name == debuffName then
             return stacks or 0
         end

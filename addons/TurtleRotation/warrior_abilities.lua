@@ -16,18 +16,20 @@ function TR:Execute()
     TR:Debug(">> Execute (rage=" .. TR:GetRage() .. ")")
 end
 
---- Sunder Armor — apply until max stacks.
+--- Sunder Armor — apply to target.
+-- TODO: Stack detection needs in-game verification. SuperWoW's UnitDebuff
+-- returns auraId as 4th value, not stacks. For now, always allow Sunder
+-- (refreshing at 5 stacks is harmless, just costs rage).
 function TR:SunderArmor()
     if not TR:IsSpellLearned("Sunder Armor") then return end
     if not TR.state.queueGCD then return end
     if not TR:HasEnoughRage("Sunder Armor") then return end
-    if TR:GetDebuffStacks("target", "Sunder Armor") >= TR.config.sunderMaxStacks then return end
     if TR:GetCooldownRemaining("Sunder Armor") > TR.config.queueWindow then return end
     if not TR:IsSlamSafe() then return end
 
     TR.state.queueGCD = false
     CastSpellByName("Sunder Armor")
-    TR:Debug(">> Sunder Armor (stacks=" .. TR:GetDebuffStacks("target", "Sunder Armor") .. ")")
+    TR:Debug(">> Sunder Armor")
 end
 
 --- Overpower — reactive from dodge, stance dance if needed.
@@ -142,9 +144,12 @@ function TR:BattleShout()
 end
 
 --- StartAttack — ensure auto-attack is running. No GCD.
+-- Uses autoAttacking flag to avoid toggling auto-attack off.
+-- Flag is reset on PLAYER_REGEN_ENABLED and PLAYER_TARGET_CHANGED.
 function TR:StartAttack()
     if not TR:HasValidTarget() then return end
-    if TR.state.swingAttackQueued then return end
+    if TR.state.autoAttacking then return end
     AttackTarget()
+    TR.state.autoAttacking = true
     TR:Debug(">> StartAttack")
 end

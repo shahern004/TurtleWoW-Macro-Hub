@@ -12,6 +12,7 @@ TR.state = {
     slamCasting = false,       -- true while Slam cast bar is active
     slamCastEnd = 0,           -- GetTime() when current slam cast finishes
     swingAttackQueued = false,  -- true when HS/Cleave is queued (on-next-swing)
+    autoAttacking = false,      -- true after AttackTarget() called, reset on combat drop/target change
     lastStanceSwap = 0,        -- GetTime() of last stance swap (prevent double-swap)
 }
 
