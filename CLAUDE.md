@@ -29,10 +29,12 @@ docs/                     # API reference (read on-demand per task)
   patterns.md             # Annotated macro pattern templates
   warrior-rotations.md    # Warrior rotation priorities & mechanics (extracted from warrior-guide.md)
   warrior-guide.md        # Full warrior guide (opinions, gear, consumes -- source material)
+  _VERSIONS.md            # Dependency version tracking
 macros/class/<class>/     # Class-specific macros (warrior/, rogue/, etc.)
 macros/general/           # Class-agnostic (targeting/, consumables/, movement/, utility/)
 macros/pvp/ macros/raid/  # PvP and raid macros
 snippets/                 # Reusable Lua fragments (detection.lua, helpers.lua)
+plans/                    # Implementation plans and research notes
 ```
 
 ## Which Docs to Read (Task Routing)

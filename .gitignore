@@ -1,3 +1,4 @@
 *.bak
 *.tmp
 scratchpad/
+.claude.local.md
