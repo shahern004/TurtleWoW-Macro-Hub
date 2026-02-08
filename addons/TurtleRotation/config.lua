@@ -41,20 +41,20 @@ TR.config = {
     -- TurtleWoW spell IDs — verify in-game with /run print(GetSpellRec(ID).name)
     -- NOTE: These are max-rank IDs. Populate during Task 8 in-game verification.
     spellId = {
-        ["Execute"]         = 0,  -- FILL IN-GAME
-        ["Mortal Strike"]   = 0,  -- FILL IN-GAME
-        ["Bloodthirst"]     = 0,  -- FILL IN-GAME
-        ["Whirlwind"]       = 0,  -- FILL IN-GAME
-        ["Slam"]            = 0,  -- FILL IN-GAME
-        ["Heroic Strike"]   = 0,  -- FILL IN-GAME
-        ["Cleave"]          = 0,  -- FILL IN-GAME
-        ["Sunder Armor"]    = 0,  -- FILL IN-GAME
-        ["Overpower"]       = 0,  -- FILL IN-GAME
-        ["Revenge"]         = 0,  -- FILL IN-GAME
-        ["Battle Shout"]    = 0,  -- FILL IN-GAME
-        ["Battle Stance"]   = 0,  -- FILL IN-GAME
-        ["Defensive Stance"]= 0,  -- FILL IN-GAME
-        ["Berserker Stance"]= 0,  -- FILL IN-GAME
+        ["Execute"]         = 20662,  -- Execute R5
+        ["Mortal Strike"]   = 21553,  -- Mortal Strike R4
+        ["Bloodthirst"]     = 0,      -- TODO: verify in-game if spec'd Fury
+        ["Whirlwind"]       = 1680,
+        ["Slam"]            = 11605,  -- Slam R4
+        ["Heroic Strike"]   = 11567,  -- Heroic Strike R9
+        ["Cleave"]          = 0,      -- TODO: verify in-game
+        ["Sunder Armor"]    = 11597,  -- Sunder Armor R5
+        ["Overpower"]       = 11585,  -- Overpower R4
+        ["Revenge"]         = 0,      -- TODO: verify in-game
+        ["Battle Shout"]    = 25289,  -- Battle Shout R7
+        ["Battle Stance"]   = 2457,
+        ["Defensive Stance"]= 71,
+        ["Berserker Stance"]= 2458,
     },
 
     -- Stance IDs for GetShapeshiftFormInfo index
