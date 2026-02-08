@@ -1,0 +1,13 @@
+## Interface: 11200
+## Title: TurtleRotation
+## Notes: Rotation framework for TurtleWoW. Warrior-first, extensible.
+## Author: TurtleWoW_Macros
+## Version: 0.1.0
+## SavedVariablesPerCharacter: TurtleRotation_Settings
+core.lua
+config.lua
+conditions.lua
+warrior_state.lua
+warrior_events.lua
+warrior_abilities.lua
+warrior_rotations.lua
