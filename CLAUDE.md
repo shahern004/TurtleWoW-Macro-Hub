@@ -11,7 +11,7 @@
 1. **Clarify** — understand class, spec, desired behavior, modifier keys, fallback logic. Ask if anything is ambiguous
 2. **Check existing work** — search `macros/` and `patterns.md` for similar implementations to build on
 3. **Read docs** — use the **Task Routing** table to pick which `docs/` files to read. Always read before using any custom API function
-4. **Write** — use `/cast` conditional syntax unless `/run` Lua scripting is specifically required. Include `@header` metadata (see **Macro File Format**)
+4. **Write** — choose the right approach: `/cast` conditional chains for simple macros, `/run` Lua for complex logic, or addon-based (frame + events) for full rotation automation. Include `@header` metadata for macro files (see **Macro File Format**)
 5. **Present & test** — show the complete macro and **wait for the user's in-game verification**. Do NOT commit or push until the user explicitly confirms it passed
 6. **Iterate or commit** — if the test fails, fix and re-present. If it passes, commit only when the user asks
 
@@ -158,7 +158,9 @@ See `macros/_template.lua` for full template. Key fields: `@requires` lists mand
 /cast [stance:1,reactive:Overpower] Overpower
 /cast [stance:2/3,reactive:Overpower] Battle Stance
 
--- Warrior Slam Rotation (no auto-attack clip)
+-- Warrior Slam Rotation (macro-based, no auto-attack clip)
+-- NOTE: For complex rotations (slam interleaving, rage reservation), we use
+-- IWinEnhanced addon (/idps, /icleave). See plans/iwin-solutions-to-port.md
 /firstaction
 /cast [noslamclip] Slam
 /cast [slamclip,reactive:Overpower] Overpower
@@ -183,7 +185,7 @@ See `macros/_template.lua` for full template. Key fields: `@requires` lists mand
 | `QueueSpellByName("spell")` | Nampower | **In `/run` scripts when queuing matters.** Forces spell into queue even outside normal queue window. Use for tight rotation scripting |
 | `CastSpellByNameNoQueue("spell")` | Nampower | **In `/run` scripts when queuing must NOT happen.** Immediate cast attempt, bypasses queue entirely |
 
-**Rule of thumb:** Use `/cast` for macros. Use `QueueSpellByName` in Lua scripts for rotation logic. Use `CastSpellByName` in Lua scripts for targeted heals/casts on specific units. Use `CastSpellByNameNoQueue` only when you explicitly need to bypass queuing.
+**Rule of thumb:** Use `/cast` for simple macros and conditional chains. For complex rotation logic (rage budgeting, swing timer interleaving), we use **IWinEnhanced** addon directly — it provides `/idps`, `/icleave`, `/itank`, `/ihodor` slash commands with queueGCD mutex, rage reservation, and slam timing built in. Customize via `warrior/rotation.lua` (priority chains) and `warrior/action.lua` (ability functions). See `plans/iwin-solutions-to-port.md` for code patterns. Use `QueueSpellByName` when forcing queue timing matters. Use `CastSpellByNameNoQueue` only when you explicitly need to bypass queuing.
 
 ## Gotchas
 - **255 char limit**: Vanilla macro limit. SuperMacro addon removes it — use book storage for long scripts. Call child macros with `{MacroName}` syntax in CleveroidMacros or `/runmacro Name`

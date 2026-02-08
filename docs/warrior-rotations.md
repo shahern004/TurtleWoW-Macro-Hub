@@ -197,9 +197,16 @@ Requires shield equipped at all times (Defensive Tactics talent requirement). Th
 
 | Topic | Document |
 |-------|----------|
-| Arms priority macro | `patterns.md#1` |
-| Slam rotation macro | `patterns.md#2` |
-| Stance dance macro | `patterns.md` |
+| **Rotation automation (Arms/Cleave/Tank)** | `addons/IWinEnhanced/warrior/rotation.lua` — priority chains, slam timing, rage reservation |
+| **Tank-specific ability functions** | `addons/IWinEnhanced/warrior/action.lua` — `HeroicStrikeTank()`, `CleaveAOE()` (no swing tax) |
+| **Tank rotation delta analysis** | `plans/2026-02-08-tank-rotation-delta-analysis.md` — DT Prot vs guide comparison |
+| **Tank rotation fixes plan** | `plans/2026-02-08-tank-rotation-fixes.md` — implementation details for /itank, /ihodor |
+| **Tank investigation backlog** | `plans/2026-02-08-tank-investigation-backlog.md` — smart TClap, auto-tab sunder |
+| **Slam weaving debug** | `/iwin slamdebug on` — shows per-keypress slam gating decisions in chat |
+| **IWinEnhanced config & rage tuning** | `addons/IWinEnhanced/warrior/setup.lua` — `/iwin ragegain`, `/iwin ragebuffer`, `/iwin dtbattle/dtdefensive/dtberserker` |
+| **IWinEnhanced architecture & patterns** | `plans/iwin-enhanced-study.md`, `plans/iwin-solutions-to-port.md` |
+| Arms priority macro (utility/reference) | `patterns.md#1` |
+| Stance dance macro | `patterns.md#4` |
 | `[noslamclip]` conditional | `cleveroid-conditionals.md` |
 | `[reactive:Overpower]` conditional | `cleveroid-conditionals.md` |
 | `[stance:N]` conditional | `cleveroid-conditionals.md` |
