@@ -14,6 +14,7 @@ TR.state = {
     swingAttackQueued = false,  -- true when HS/Cleave is queued (on-next-swing)
     autoAttacking = false,      -- true after AttackTarget() called, reset on combat drop/target change
     lastStanceSwap = 0,        -- GetTime() of last stance swap (prevent double-swap)
+    sunderCount = 0,           -- tracked manually (API can't return stacks reliably)
 }
 
 --- Reset per-keypress state. Called at the start of every rotation execution.

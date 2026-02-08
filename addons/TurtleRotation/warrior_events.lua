@@ -59,9 +59,10 @@ function TR:HandleWarriorEvent()
         end
 
     elseif event == "PLAYER_TARGET_CHANGED" then
-        -- Reset auto-attack flag so we re-call AttackTarget on new target
+        -- Reset per-target state
         TR.state.autoAttacking = false
-        TR:Debug("Target changed, auto-attack reset")
+        TR.state.sunderCount = 0
+        TR:Debug("Target changed, state reset")
 
     elseif event == "PLAYER_REGEN_ENABLED" then
         -- Left combat — reset combat state flags

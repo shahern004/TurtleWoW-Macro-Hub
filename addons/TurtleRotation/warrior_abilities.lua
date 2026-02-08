@@ -16,20 +16,21 @@ function TR:Execute()
     TR:Debug(">> Execute (rage=" .. TR:GetRage() .. ")")
 end
 
---- Sunder Armor — apply to target.
--- TODO: Stack detection needs in-game verification. SuperWoW's UnitDebuff
--- returns auraId as 4th value, not stacks. For now, always allow Sunder
--- (refreshing at 5 stacks is harmless, just costs rage).
+--- Sunder Armor — apply until max stacks (tracked manually).
+-- SuperWoW's UnitDebuff returns auraId, not stacks, so we track count ourselves.
+-- Count increments on cast, resets on target change.
 function TR:SunderArmor()
     if not TR:IsSpellLearned("Sunder Armor") then return end
     if not TR.state.queueGCD then return end
+    if TR.state.sunderCount >= TR.config.sunderMaxStacks then return end
     if not TR:HasEnoughRage("Sunder Armor") then return end
     if TR:GetCooldownRemaining("Sunder Armor") > TR.config.queueWindow then return end
     if not TR:IsSlamSafe() then return end
 
     TR.state.queueGCD = false
+    TR.state.sunderCount = TR.state.sunderCount + 1
     CastSpellByName("Sunder Armor")
-    TR:Debug(">> Sunder Armor")
+    TR:Debug(">> Sunder Armor (" .. TR.state.sunderCount .. "/" .. TR.config.sunderMaxStacks .. ")")
 end
 
 --- Overpower — reactive from dodge, stance dance if needed.
