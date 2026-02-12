@@ -848,7 +848,8 @@ function IWin:Revenge()
 end
 
 function IWin:SetReservedRageRevenge()
-	if IWin:IsTanking() then
+	if IWin:IsTanking()
+		and IWin:IsStanceActive("Defensive Stance") then
 		IWin:SetReservedRage("Revenge", "cooldown")
 	end
 end
