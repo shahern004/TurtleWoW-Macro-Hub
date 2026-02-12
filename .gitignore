@@ -1,4 +1,38 @@
+# Backup and temp files
 *.bak
 *.tmp
+*.swp
+*~
+
+# Project-local scratch space
 scratchpad/
+
+# Claude Code local config (per-machine permissions/preferences)
 .claude.local.md
+.claude/settings.local.json
+
+# Serena plugin config
+.serena/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editor files
+.vscode/
+.idea/
+*.suo
+*.user
+*.code-workspace
+
+# Windows artifacts
+nul
+
+# Environment / secrets (prevent accidental creation)
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
