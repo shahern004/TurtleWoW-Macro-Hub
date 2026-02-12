@@ -1300,6 +1300,9 @@ function IWin:TargetLooseMob()
 	-- If current target is loose (not targeting us), stay on it
 	if not currentTargetingUs then return end
 
+	-- If current target needs sunder, stay on it (sunder first, cycle next press)
+	if not currentHasSunder then return end
+
 	local bestGuid = nil
 	local bestScore = 0
 	-- Score: 4 = loose + no sunder, 3 = loose + sundered, 2 = targeting us + no sunder
