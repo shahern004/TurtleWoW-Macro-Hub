@@ -138,7 +138,19 @@ function IWin:BloodthirstHighAP(queueTime)
 end
 
 function IWin:SetReservedRageBloodthirstHighAP()
-	if IWin:IsHighAP() then 
+	if IWin:IsHighAP() then
+		IWin:SetReservedRage("Bloodthirst", "cooldown")
+	end
+end
+
+function IWin:SetReservedRageMortalStrikeTank()
+	if IWin:IsSpellLearnt("Mortal Strike") then
+		IWin:SetReservedRage("Mortal Strike", "cooldown")
+	end
+end
+
+function IWin:SetReservedRageBloodthirstTank()
+	if IWin:IsSpellLearnt("Bloodthirst") then
 		IWin:SetReservedRage("Bloodthirst", "cooldown")
 	end
 end
@@ -426,7 +438,8 @@ function IWin:HamstringWindfury()
 		and not IWin:IsOnCooldown("Hamstring")
 		and IWin:IsRageAvailable("Hamstring")
 		and not IWin:IsStanceActive("Defensive Stance")
-		and IWin:IsBuffActive("player", "Windfury Totem") then
+		and IWin:IsBuffActive("player", "Windfury Totem")
+		and not IWin_CombatVar["slamQueued"] then
 			IWin_CombatVar["queueGCD"] = false
 			CastSpellByName("Hamstring")
 	end
@@ -636,7 +649,7 @@ function IWin:MasterStrikeWindfury()
 		and IWin:IsRageAvailable("Master Strike")
 		and IWin:IsBuffActive("player", "Windfury Totem") then
 			IWin_CombatVar["queueGCD"] = false
-			CastSpellByName("Hamstring")
+			CastSpellByName("Master Strike")
 	end
 end
 
@@ -1126,7 +1139,8 @@ function IWin:SunderArmorWindfury()
 	if IWin:IsSpellLearnt("Sunder Armor")
 		and IWin_CombatVar["queueGCD"]
 		and IWin:IsRageAvailable("Sunder Armor")
-		and IWin:IsBuffActive("player", "Windfury Totem") then
+		and IWin:IsBuffActive("player", "Windfury Totem")
+		and not IWin_CombatVar["slamQueued"] then
 			IWin_CombatVar["queueGCD"] = false
 			CastSpellByName("Sunder Armor")
 	end

@@ -21,7 +21,21 @@
       "Bash(python -c:*)",
       "mcp__plugin_serena_serena__get_current_config",
       "mcp__plugin_serena_serena__list_dir",
-      "mcp__plugin_serena_serena__activate_project"
+      "mcp__plugin_serena_serena__activate_project",
+      "mcp__plugin_prompts_chat_prompts_chat__search_skills",
+      "mcp__plugin_prompts_chat_prompts_chat__search_prompts",
+      "mcp__plugin_prompts_chat_prompts_chat__save_prompt",
+      "Bash(git clone:*)",
+      "mcp__plugin_serena_serena__read_file",
+      "mcp__plugin_serena_serena__get_symbols_overview",
+      "Bash(powershell -Command \"[System.IO.File]::ReadAllBytes\\(''C:\\\\Games\\\\TurtleWoW_Macros\\\\addons\\\\TurtleRotation\\\\TurtleRotation.toc''\\)[0..2] -join '',''\")",
+      "Bash(powershell:*)",
+      "Bash(copy \"C:\\\\Games\\\\TurtleWoW_Macros\\\\addons\\\\TurtleRotation\\\\config.lua\" \"C:\\\\Games\\\\TurtleWoW\\\\Interface\\\\AddOns\\\\TurtleRotation\\\\config.lua\" /Y)",
+      "mcp__plugin_serena_serena__execute_shell_command",
+      "Bash(xcopy:*)",
+      "mcp__plugin_serena_serena__search_for_pattern",
+      "Bash(find:*)",
+      "Bash(git status:*)"
     ]
   },
   "outputStyle": "Explanatory",

@@ -17,6 +17,11 @@
 
 ## Project Structure
 ```
+addons/IWinEnhanced/      # IWinEnhanced dev copy (edit here, deploy to live)
+  warrior/rotation.lua    # Rotation priority chains (/idps, /icleave, /itank, /ihodor)
+  warrior/action.lua      # Ability function implementations (self-gating, rage checks)
+  warrior/setup.lua       # Config system (/iwin slash command)
+  warrior/data.lua        # Rage cost table
 docs/                     # API reference (read on-demand per task)
   superwow-api.md         # SuperWoW DLL functions, events, CVars
   nampower-api.md         # Nampower Lua functions (30+)
@@ -29,7 +34,9 @@ docs/                     # API reference (read on-demand per task)
   patterns.md             # Annotated macro pattern templates
   warrior-rotations.md    # Warrior rotation priorities & mechanics (extracted from warrior-guide.md)
   warrior-guide.md        # Full warrior guide (opinions, gear, consumes -- source material)
+  iwin-code-review-rules.md  # 17 rule categories for IWinEnhanced code review
   _VERSIONS.md            # Dependency version tracking
+.claude/skills/           # Claude Code skills (iwin-analyzer, etc.)
 macros/class/<class>/     # Class-specific macros (warrior/, rogue/, etc.)
 macros/general/           # Class-agnostic (targeting/, consumables/, movement/, utility/)
 macros/pvp/ macros/raid/  # PvP and raid macros
@@ -50,6 +57,7 @@ plans/                    # Implementation plans and research notes
 | **Tracking debuffs across target swaps** | `cleveroid-conditionals.md#debuff-tracking` (built-in vs Cursive) |
 | **Checking immunity / CC** | `cleveroid-conditionals.md#cc--immunity` + `cleveroid-conditionals.md#immunity-tracking` |
 | **Spell queuing behavior** | `nampower-api.md#spell-casting-and-queuing` + `nampower-cvars.md#spell-queuing-controls` |
+| **IWinEnhanced code review** | `iwin-code-review-rules.md` (17 rule categories) + `warrior-rotations.md` (expected priorities) |
 
 ## Dependency Stack
 | Source | Doc File(s) | Purpose |
@@ -59,6 +67,7 @@ plans/                    # Implementation plans and research notes
 | **SuperCleveRoidMacros** (addon) | `cleveroid-syntax.md`, `cleveroid-conditionals.md` | Conditional macro system: 100+ conditionals, /cast with [cond], multiscan, immunity tracking, debuff timers |
 | **UnitXP_SP3** (DLL) | `unitxp-api.md` | Distance (5 meters), line-of-sight, behind check, advanced targeting, timers |
 | **Vanilla 1.12 API** | `vanilla-api-essentials.md` | Base WoW API (many functions enhanced by SuperWoW) |
+| **IWinEnhanced** (addon) | `addons/IWinEnhanced/warrior/` | Rotation automation: `/idps`, `/icleave`, `/itank`, `/ihodor` with queueGCD mutex, rage reservation, slam timing. Dev copy in repo, deploy to live with `cp -r` |
 
 ## SuperCleveRoidMacros Quick Reference
 **Basic syntax:** `/cast [cond1,cond2] Spell; [cond3] Other Spell`

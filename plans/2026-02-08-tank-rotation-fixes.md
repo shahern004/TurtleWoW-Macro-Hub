@@ -10,7 +10,7 @@
 
 **Testing:** No automated tests — all verification is in-game via `/reload`. Each task includes a test plan with specific in-game checks.
 
-**Deploy command:** `xcopy /E /Y "C:\Games\TurtleWoW_Macros\addons\IWinEnhanced\*" "C:\Games\TurtleWoW\Interface\AddOns\IWinEnhanced\"` then `/reload` in-game.
+**Deploy command:** `cp -r addons/IWinEnhanced/* C:/Games/TurtleWoW/Interface/AddOns/IWinEnhanced/` then `/reload` in-game.
 
 ---
 
@@ -274,7 +274,7 @@ git commit -m "fix(tank): relax ShieldBlock gate from 5 sunders to 1 sunder"
 **Step 1: Deploy to live addon folder**
 
 ```bash
-xcopy /E /Y "C:\Games\TurtleWoW_Macros\addons\IWinEnhanced\*" "C:\Games\TurtleWoW\Interface\AddOns\IWinEnhanced\"
+cp -r addons/IWinEnhanced/* C:/Games/TurtleWoW/Interface/AddOns/IWinEnhanced/
 ```
 
 **Step 2: In-game verification checklist**

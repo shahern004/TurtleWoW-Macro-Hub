@@ -6,6 +6,8 @@
 
 Annotated examples of common macro patterns using the full Turtle WoW addon stack. All macros use SuperCleveRoidMacros conditional syntax (`cleveroid-syntax.md`, `cleveroid-conditionals.md`).
 
+> **Hybrid approach:** For full rotation automation (Arms DPS, Cleave, Tank ST, Tank AoE), we use the **IWinEnhanced** addon (`/idps`, `/icleave`, `/itank`, `/ihodor`) which handles slam timing, rage reservation, and GCD queuing. The `/cast` macro patterns below are best suited for **utility macros** (stance dance, trinket swap, mouseover heal, pet control, defensive cascades) and as learning references for conditional syntax. See `addons/IWinEnhanced/warrior/rotation.lua` for rotation priority chains.
+
 ---
 
 ## 1. Priority DPS (Warrior -- Arms)
