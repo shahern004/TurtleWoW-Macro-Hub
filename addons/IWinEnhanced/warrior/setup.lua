@@ -61,6 +61,13 @@ function SlashCmdList.IWINWARRIOR(command)
 				DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Unkown parameter. Possible values: on, off.|r")
 				return
 		end
+	elseif arguments[1] == "tabsunder" then
+		if arguments[2] ~= "on"
+			and arguments[2] ~= "off"
+			and arguments[2] ~= nil then
+				DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Unkown parameter. Possible values: on, off.|r")
+				return
+		end
 	elseif arguments[1] == "ragebuffer" then
 		if tonumber(arguments[2]) < 0
 			and arguments[2] ~= nil then
@@ -122,6 +129,9 @@ function SlashCmdList.IWINWARRIOR(command)
 	elseif arguments[1] == "slamdebug" then
 	    IWin_Settings["slamdebug"] = arguments[2]
 	    DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Slam Debug: |r" .. IWin_Settings["slamdebug"])
+	elseif arguments[1] == "tabsunder" then
+	    IWin_Settings["tabSunder"] = arguments[2]
+	    DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Tab Sunder: |r" .. IWin_Settings["tabSunder"])
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Usage:|r")
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin:|r Current setup")
@@ -136,5 +146,6 @@ function SlashCmdList.IWINWARRIOR(command)
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin ragegain [|r" .. tostring(IWin_Settings["ragePerSecondPrediction"]) .. "|cff0066ff]:|r Setup to anticipate rage gain per second. Required rage will be saved gradually before the spells are used. 10 is the default parameter. Increase the value if rage is wasted.")
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin jousting [|r" .. IWin_Settings["jousting"] .. "|cff0066ff]:|r Setup for Jousting solo DPS")
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin slamdebug [|r" .. (IWin_Settings["slamdebug"] or "off") .. "|cff0066ff]:|r Show slam weaving debug output")
+		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin tabsunder [|r" .. IWin_Settings["tabSunder"] .. "|cff0066ff]:|r Auto tab-target to unsundered mobs in /ihodor")
     end
 end
