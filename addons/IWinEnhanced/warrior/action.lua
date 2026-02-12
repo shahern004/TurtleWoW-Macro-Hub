@@ -1289,7 +1289,7 @@ function IWin:TargetLooseMob()
 	if not IWin_CombatVar["queueGCD"] then return end
 	if IWin_CombatVar["slamQueued"] then return end
 
-	local originalGuid = UnitExists("target")
+	local _, originalGuid = UnitExists("target")
 	if not originalGuid then return end
 
 	-- Check current target state
@@ -1307,7 +1307,7 @@ function IWin:TargetLooseMob()
 	local maxCycles = 8
 	for i = 1, maxCycles do
 		UnitXP("target", "nextEnemyConsideringDistance")
-		local cycledGuid = UnitExists("target")
+		local _, cycledGuid = UnitExists("target")
 
 		-- Cycled back to original = done
 		if not cycledGuid or cycledGuid == originalGuid then break end
