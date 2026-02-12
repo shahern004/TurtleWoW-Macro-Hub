@@ -2,7 +2,7 @@
 
 > Date: 2026-02-08
 > Context: DT Prot warrior, IWinEnhanced addon
-> Status: INVESTIGATION NEEDED — not yet planned or implemented
+> Status: Investigation 2 DONE (2026-02-11). Investigation 1 superseded by tab-sunder.
 
 ---
 
