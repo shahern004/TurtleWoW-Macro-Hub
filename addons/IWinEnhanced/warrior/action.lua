@@ -1279,3 +1279,77 @@ function IWin:WhirlwindAOE(queueTime)
 			end
 	end
 end
+
+-- Tab-Sunder: find highest-priority loose/unsundered mob in melee range
+-- Priority: (1) not targeting us + no sunder, (2) not targeting us + sundered,
+--           (3) targeting us + no sunder, (4) no switch needed
+function IWin:TargetLooseMob()
+	if IWin_Settings["tabSunder"] ~= "on" then return end
+	if not UnitAffectingCombat("player") then return end
+	if not IWin_CombatVar["queueGCD"] then return end
+	if IWin_CombatVar["slamQueued"] then return end
+
+	local originalGuid = UnitExists("target")
+	if not originalGuid then return end
+
+	-- Check current target state
+	local currentHasSunder = IWin:IsBuffActive("target", "Sunder Armor")
+		or IWin:IsBuffActive("target", "Expose Armor")
+	local currentTargetingUs = UnitIsUnit("targettarget", "player")
+
+	-- If current target is loose (not targeting us), stay on it
+	if not currentTargetingUs then return end
+
+	local bestGuid = nil
+	local bestScore = 0
+	-- Score: 4 = loose + no sunder, 3 = loose + sundered, 2 = targeting us + no sunder
+
+	local maxCycles = 8
+	for i = 1, maxCycles do
+		UnitXP("target", "nextEnemyConsideringDistance")
+		local cycledGuid = UnitExists("target")
+
+		-- Cycled back to original = done
+		if not cycledGuid or cycledGuid == originalGuid then break end
+
+		-- Skip dead or friendly
+		if not UnitIsDead("target") and not UnitIsFriend("target", "player") then
+			-- Skip out-of-melee targets (sunder is melee range)
+			local dist = UnitXP("distanceBetween", "player", "target", "meleeAutoAttack")
+			if dist >= 0 and dist <= 8 then
+				local hasSunder = IWin:IsBuffActive("target", "Sunder Armor")
+					or IWin:IsBuffActive("target", "Expose Armor")
+				local targetingUs = UnitIsUnit("targettarget", "player")
+
+				local score = 0
+				if not targetingUs and not hasSunder then
+					score = 4
+				elseif not targetingUs and hasSunder then
+					score = 3
+				elseif targetingUs and not hasSunder then
+					score = 2
+				end
+
+				if score > bestScore then
+					bestScore = score
+					bestGuid = cycledGuid
+				end
+
+				-- Early exit on perfect candidate
+				if bestScore == 4 then break end
+			end -- dist check
+		end -- dead/friendly check
+	end
+
+	-- Switch to best candidate, or restore original
+	if bestGuid and bestScore > 0 then
+		if bestScore >= 3 or (bestScore >= 2 and currentHasSunder) then
+			TargetUnit(bestGuid)
+			IWin:StartAttack()
+		else
+			TargetUnit(originalGuid)
+		end
+	else
+		TargetUnit(originalGuid)
+	end
+end
