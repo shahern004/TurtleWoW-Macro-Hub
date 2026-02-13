@@ -36,7 +36,7 @@ addons/IWinEnhanced/      # IWinEnhanced dev copy (edit here, deploy to live)
   warrior/event.lua       # Event handlers (combat log, swing timer)
   warrior/init.lua        # Warrior module initialization
 docs/                     # API reference (read on-demand per task routing table)
-  plans/                  # Design docs for implemented features
+  plans/                  # Design docs, delta analyses, architecture reference
   superwow-api.md         # SuperWoW DLL functions, events, CVars
   nampower-api.md         # Nampower Lua functions (30+)
   nampower-events.md      # Nampower custom events (30+)
@@ -49,7 +49,6 @@ docs/                     # API reference (read on-demand per task routing table
   iwin-code-review-rules.md  # 17 rule categories for IWinEnhanced code review
   _VERSIONS.md            # Dependency version tracking
 .claude/skills/           # Claude Code skills (iwin-analyzer, etc.)
-plans/                    # Implementation plans and research notes
 ```
 
 ## Which Docs to Read (Task Routing)
@@ -65,6 +64,8 @@ plans/                    # Implementation plans and research notes
 | **Spell queuing behavior** | `nampower-api.md#spell-casting-and-queuing` + `nampower-cvars.md#spell-queuing-controls` |
 | **Checking buffs beyond buff cap** | `doiteauras-api.md` (DoitePlayerAuras: HasBuff, GetBuffStacks, IsHiddenByBuffCap) |
 | **Querying aura duration/ownership** | `doiteauras-api.md` (DoiteTrack: GetAuraRemainingSecondsByName, GetAuraOwnershipByName) |
+| **Understanding IWinEnhanced internals** | `docs/plans/iwin-enhanced-study.md` (architecture) + `docs/plans/iwin-code-patterns.md` (6 solved problems with code) |
+| **Reviewing rotation delta analyses** | `docs/plans/2026-02-08-rotation-delta-analysis.md` (DPS, 21 deltas) + `docs/plans/2026-02-08-tank-rotation-delta-analysis.md` (tank, 18 deltas) |
 | **IWinEnhanced code review** | `iwin-code-review-rules.md` (17 rule categories) + `warrior-rotations.md` (expected priorities) |
 
 ## Dependency Stack
