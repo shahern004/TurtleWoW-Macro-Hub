@@ -4,6 +4,8 @@ SLASH_IDPSWARRIOR1 = "/idps"
 function SlashCmdList.IDPSWARRIOR()
 	IWin:InitializeRotation()
 	IWin:TargetEnemy()
+	IWin:TargetSkullX()
+	IWin:TargetLowestHP()
 	IWin:BattleShoutRefreshOOC()
 	IWin:ChargePartySize()
 	IWin:InterceptPartySize()
@@ -62,6 +64,8 @@ SLASH_ICLEAVEWARRIOR1 = "/icleave"
 function SlashCmdList.ICLEAVEWARRIOR()
 	IWin:InitializeRotation()
 	IWin:TargetEnemy()
+	IWin:TargetSkullX()
+	IWin:TargetLowestHP()
 	IWin:BattleShoutRefreshOOC()
 	IWin:ChargePartySize()
 	IWin:InterceptPartySize()
@@ -207,6 +211,20 @@ function SlashCmdList.IFEARDANCEWARRIOR()
 	IWin:InitializeRotation()
 	IWin:TargetEnemy()
 	IWin:BerserkerRageImmune()
+	IWin:StartAttack()
+end
+
+SLASH_IBURSTWARRIOR1 = "/iburst"
+function SlashCmdList.IBURSTWARRIOR()
+	IWin:InitializeRotation()
+	IWin:TargetEnemy()
+	-- Off-GCD: fire all simultaneously (don't consume queueGCD)
+	IWin:BloodrageBurst()
+	IWin:UseTrinket13()
+	IWin:UseTrinket14()
+	IWin:UseJujuFlurry()
+	-- On-GCD: Death Wish (consumes the GCD)
+	IWin:DeathWish()
 	IWin:StartAttack()
 end
 
