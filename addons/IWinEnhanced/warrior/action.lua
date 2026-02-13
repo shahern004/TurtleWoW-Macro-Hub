@@ -1433,6 +1433,58 @@ function IWin:TargetSkullX()
 	end
 end
 
+function IWin:TargetSweepingExecute()
+	if not UnitAffectingCombat("player") then return end
+	if not IWin:IsSpellLearnt("Sweeping Strikes") then return end
+	if not IWin:IsSpellLearnt("Execute") then return end
+
+	-- Only swap if Sweeping Strikes is active or off cooldown
+	local ssActive = IWin:IsBuffActive("player", "Sweeping Strikes")
+	local ssReady = IWin:GetCooldownRemaining("Sweeping Strikes") == 0
+	if not ssActive and not ssReady then return end
+
+	-- Skip if current target is already in execute range
+	if UnitExists("target") and not UnitIsDead("target")
+		and not UnitIsFriend("target", "player")
+		and (UnitHealth("target") / UnitHealthMax("target") * 100) < 20 then
+			return
+	end
+
+	-- Cycle nearby enemies to find one in execute range (<20% HP)
+	local _, originalGuid = UnitExists("target")
+	local bestGuid = nil
+	local bestHpPct = 20
+
+	local maxCycles = 8
+	for i = 1, maxCycles do
+		UnitXP("target", "nextEnemyConsideringDistance")
+
+		if not UnitExists("target") then break end
+
+		local _, cycledGuid = UnitExists("target")
+		if not cycledGuid then break end
+		if originalGuid and cycledGuid == originalGuid then break end
+
+		-- Skip dead or friendly
+		if not UnitIsDead("target") and not UnitIsFriend("target", "player") then
+			local dist = UnitXP("distanceBetween", "player", "target", "meleeAutoAttack")
+			if dist >= 0 and dist <= 8 then
+				local hpPct = UnitHealth("target") / UnitHealthMax("target") * 100
+				if hpPct < bestHpPct then
+					bestHpPct = hpPct
+					bestGuid = cycledGuid
+				end
+			end
+		end
+	end
+
+	if bestGuid then
+		TargetUnit(bestGuid)
+	elseif originalGuid then
+		TargetUnit(originalGuid)
+	end
+end
+
 function IWin:TargetLowestHP()
 	-- Only run when we need a new target (dead, missing, or friendly)
 	if UnitExists("target")
