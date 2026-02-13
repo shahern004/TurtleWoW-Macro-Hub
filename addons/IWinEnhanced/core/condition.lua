@@ -56,7 +56,10 @@ function IWin:GetBuffRemaining(unit, spell, owner)
 	    if DoitePlayerAuras then
 			local timeLeft = DoitePlayerAuras.GetHiddenBuffRemaining(spell)
 			if timeLeft then
-				return timeleft
+				return timeLeft
+			end
+			if DoitePlayerAuras.HasBuff(spell) then
+				return 9999
 			end
 		end
     end
@@ -88,7 +91,8 @@ function IWin:GetBuffStack(unit, spell, owner)
 	-- Player buff scan
 	if unit == "player" then
 		if DoitePlayerAuras then
-			return DoitePlayerAuras.GetBuffStacks(spell) or 0
+			local stacks = DoitePlayerAuras.GetBuffStacks(spell)
+			if stacks then return stacks end
 		end
 		local index = IWin:GetPlayerBuffIndex(spell)
 		if index then
@@ -110,6 +114,22 @@ end
 
 function IWin:IsBuffStack(unit, spell, stack, owner)
 	return IWin:GetBuffStack(unit, spell, owner) == stack
+end
+
+function IWin:GetDebuffRemainingDoite(unit, spell)
+	if DoiteTrack and DoiteTrack.GetAuraRemainingSecondsByName then
+		local remaining = DoiteTrack:GetAuraRemainingSecondsByName(spell, unit)
+		if remaining then return remaining end
+	end
+	return nil
+end
+
+function IWin:IsMyDebuffActive(unit, spell)
+	if DoiteTrack and DoiteTrack.GetAuraOwnershipByName then
+		local _, _, _, hasMine, _, ownerKnown = DoiteTrack:GetAuraOwnershipByName(spell, unit)
+		if ownerKnown then return hasMine end
+	end
+	return nil
 end
 
 function IWin:IsTaunted()

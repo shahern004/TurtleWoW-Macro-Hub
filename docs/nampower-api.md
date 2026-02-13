@@ -199,10 +199,9 @@ Returns item info for one specific bag slot.
 
 ## Spell Casting and Queuing
 
-> **Which casting function to use?** `/cast [cond] Spell` for macros (CleveroidMacros).
-> `QueueSpellByName` for Lua scripts needing queue timing. `CastSpellByName("spell", "unit")`
-> for Lua scripts targeting specific units (SuperWoW). `CastSpellByNameNoQueue` only when
-> bypassing the queue is required. See `CLAUDE.md#casting-function-disambiguation` for details.
+> **IWinEnhanced uses `CastSpellByName()`** — queuing is handled by the addon framework.
+> `QueueSpellByName` is available for forcing queue timing in Lua scripts.
+> `CastSpellByNameNoQueue` bypasses the queue entirely (rare).
 
 ### QueueSpellByName(spellName)
 

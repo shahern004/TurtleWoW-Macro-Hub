@@ -10,3 +10,4 @@ Last synced: 2026-02-06
 | UnitXP_SP3 | codeberg/konaka/UnitXP_SP3 | wiki HEAD | 2026-02-06 |
 | Turtle-WoW-UI-Source | github/refaim/Turtle-WoW-UI-Source | n/a | 2026-02-06 |
 | IWinEnhanced | local fork (addons/IWinEnhanced/) | forked 2026-02-07 | 2026-02-11 |
+| DoiteAuras | local copy (DoiteAuras/) | v1.5.0 | 2026-02-13 |
