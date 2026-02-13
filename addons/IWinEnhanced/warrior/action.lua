@@ -107,6 +107,47 @@ function IWin:Bloodrage()
 	end
 end
 
+function IWin:DeathWish()
+	if IWin:IsSpellLearnt("Death Wish")
+		and IWin_CombatVar["queueGCD"]
+		and not IWin:IsOnCooldown("Death Wish")
+		and IWin:IsRageCostAvailable("Death Wish")
+		and not IWin_CombatVar["slamQueued"] then
+			IWin_CombatVar["queueGCD"] = false
+			CastSpellByName("Death Wish")
+	end
+end
+
+function IWin:BloodrageBurst()
+	if IWin:IsSpellLearnt("Bloodrage")
+		and not IWin:IsOnCooldown("Bloodrage")
+		and IWin:GetHealthPercent("player") > 25
+		and not IWin:IsBuffActive("player", "Enrage") then
+			CastSpellByName("Bloodrage")
+	end
+end
+
+function IWin:UseTrinket13()
+	local cd = GetTrinketCooldown(13)
+	if type(cd) == "table" and cd.isOnCooldown == 0 then
+		UseTrinket(13)
+	end
+end
+
+function IWin:UseTrinket14()
+	local cd = GetTrinketCooldown(14)
+	if type(cd) == "table" and cd.isOnCooldown == 0 then
+		UseTrinket(14)
+	end
+end
+
+function IWin:UseJujuFlurry()
+	if not IWin:IsBuffActive("player", "Juju Flurry")
+		and IWin:IsItemInBag("Juju Flurry") then
+			IWin:UseItem("Juju Flurry")
+	end
+end
+
 function IWin:Bloodthirst(queueTime)
 	if IWin:IsSpellLearnt("Bloodthirst")
 		and IWin_CombatVar["queueGCD"]
@@ -1354,5 +1395,83 @@ function IWin:TargetLooseMob()
 		end
 	else
 		TargetUnit(originalGuid)
+	end
+end
+
+function IWin:TargetSkullX()
+	if IWin_Settings["skullTarget"] ~= "on" then return end
+	if not UnitAffectingCombat("player") then return end
+
+	-- Check which marked targets exist and are valid (alive + hostile)
+	local skullValid = UnitExists("mark8") and not UnitIsDead("mark8") and not UnitIsFriend("mark8", "player")
+	local xValid = UnitExists("mark7") and not UnitIsDead("mark7") and not UnitIsFriend("mark7", "player")
+
+	if not skullValid and not xValid then return end
+
+	local chosenMark = nil
+	if skullValid and not xValid then
+		chosenMark = "mark8"
+	elseif xValid and not skullValid then
+		chosenMark = "mark7"
+	else
+		-- Both valid: pick whichever is closer
+		local distSkull = UnitXP("distanceBetween", "player", "mark8", "meleeAutoAttack")
+		local distX = UnitXP("distanceBetween", "player", "mark7", "meleeAutoAttack")
+		if distSkull >= 0 and (distX < 0 or distSkull <= distX) then
+			chosenMark = "mark8"
+		else
+			chosenMark = "mark7"
+		end
+	end
+
+	-- Skip if already targeting the chosen mark
+	if UnitIsUnit("target", chosenMark) then return end
+
+	local _, markGuid = UnitExists(chosenMark)
+	if markGuid then
+		TargetUnit(markGuid)
+	end
+end
+
+function IWin:TargetLowestHP()
+	-- Only run when we need a new target (dead, missing, or friendly)
+	if UnitExists("target")
+		and not UnitIsDead("target")
+		and not UnitIsFriend("target", "player") then
+			return
+	end
+
+	if not UnitAffectingCombat("player") then return end
+
+	local bestGuid = nil
+	local bestHpPct = 101
+
+	local maxCycles = 8
+	for i = 1, maxCycles do
+		UnitXP("target", "nextEnemyConsideringDistance")
+
+		if not UnitExists("target") then break end
+
+		local _, cycledGuid = UnitExists("target")
+		if not cycledGuid then break end
+
+		-- Skip dead or friendly
+		if not UnitIsDead("target") and not UnitIsFriend("target", "player") then
+			-- Only consider targets in melee range
+			local dist = UnitXP("distanceBetween", "player", "target", "meleeAutoAttack")
+			if dist >= 0 and dist <= 8 then
+				local hpPct = UnitHealth("target") / UnitHealthMax("target") * 100
+				if hpPct < bestHpPct then
+					bestHpPct = hpPct
+					bestGuid = cycledGuid
+				end
+			end
+		end
+	end
+
+	if bestGuid then
+		TargetUnit(bestGuid)
+	else
+		TargetNearestEnemy()
 	end
 end
