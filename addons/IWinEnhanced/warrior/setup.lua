@@ -68,6 +68,13 @@ function SlashCmdList.IWINWARRIOR(command)
 				DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Unkown parameter. Possible values: on, off.|r")
 				return
 		end
+	elseif arguments[1] == "skulltarget" then
+		if arguments[2] ~= "on"
+			and arguments[2] ~= "off"
+			and arguments[2] ~= nil then
+				DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Unkown parameter. Possible values: on, off.|r")
+				return
+		end
 	elseif arguments[1] == "ragebuffer" then
 		if tonumber(arguments[2]) < 0
 			and arguments[2] ~= nil then
@@ -132,6 +139,9 @@ function SlashCmdList.IWINWARRIOR(command)
 	elseif arguments[1] == "tabsunder" then
 	    IWin_Settings["tabSunder"] = arguments[2]
 	    DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Tab Sunder: |r" .. IWin_Settings["tabSunder"])
+	elseif arguments[1] == "skulltarget" then
+	    IWin_Settings["skullTarget"] = arguments[2]
+	    DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Skull Target: |r" .. IWin_Settings["skullTarget"])
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff Usage:|r")
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin:|r Current setup")
@@ -147,5 +157,6 @@ function SlashCmdList.IWINWARRIOR(command)
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin jousting [|r" .. IWin_Settings["jousting"] .. "|cff0066ff]:|r Setup for Jousting solo DPS")
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin slamdebug [|r" .. (IWin_Settings["slamdebug"] or "off") .. "|cff0066ff]:|r Show slam weaving debug output")
 		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin tabsunder [|r" .. IWin_Settings["tabSunder"] .. "|cff0066ff]:|r Auto tab-target to unsundered mobs in /ihodor")
+		DEFAULT_CHAT_FRAME:AddMessage("|cff0066ff /iwin skulltarget [|r" .. IWin_Settings["skullTarget"] .. "|cff0066ff]:|r Prioritize skull/X marked targets in /idps and /icleave")
     end
 end
